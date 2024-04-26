@@ -10,6 +10,7 @@ export class FxConversionService {
 
     async convertFx(userId: string, from_curr: string, to_curr: string, amount: number, quoteId: string): Promise<{ convertedAmount: number, currency: string }> {
         const response = await this.fxRatesService.fetchFxRates(from_curr, to_curr);
+        console.log(response.quoteId, quoteId)
         if (response.quoteId !== quoteId) {
             throw new HttpException('Invalid quoteId or quoteId expired', HttpStatus.BAD_REQUEST);
         }

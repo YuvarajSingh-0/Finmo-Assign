@@ -7,8 +7,10 @@ import configuration from 'src/config/configuration';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot({load:[configuration]}), JwtModule.register({ global: true, signOptions: { expiresIn: '60m' }, secret: configuration().JWT_SECRET }), MongooseModule.forFeature([{ name: 'Users', schema: UserSchema }])],
+  imports: [MongooseModule.forFeature([{ name: 'Users', schema: UserSchema }]) ,
+  ConfigModule.forRoot({load:[configuration]}), 
+  JwtModule.register({ global: true, signOptions: { expiresIn: '60m' }, secret: configuration().JWT_SECRET })],
   providers: [AuthService, JwtService],
-  exports: [AuthModule]
+  exports: [MongooseModule.forFeature([{ name: 'Users', schema: UserSchema }])]
 })
 export class AuthModule { }

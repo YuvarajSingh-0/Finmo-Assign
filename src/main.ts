@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Forex Trading System')
     .setDescription('Forex Trading System API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

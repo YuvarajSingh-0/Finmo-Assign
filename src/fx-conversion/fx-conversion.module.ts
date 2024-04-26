@@ -10,7 +10,7 @@ import { UserSchema } from 'src/schemas/users.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [HttpModule, FxRatesModule, AccountsModule, MongooseModule.forFeature([{ name: 'Users', schema: UserSchema } ]), MongooseModule.forFeature([{ name: 'Accounts', schema: UserSchema }])],
+  imports: [HttpModule, AccountsModule, MongooseModule.forFeature([{ name: 'Users', schema: UserSchema },{ name: 'Accounts', schema: UserSchema }])],
   controllers: [FxConversionController],
   providers: [FxConversionService, FxRatesService, AccountsService]
 })

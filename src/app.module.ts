@@ -10,12 +10,17 @@ import { FxRatesModule } from './fx-rates/fx-rates.module';
 import configuration from './config/configuration';
 import { CacheModule } from '@nestjs/cache-manager';
 import { FxConversionModule } from './fx-conversion/fx-conversion.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true, load: [configuration]}),
-    MongooseModule.forRoot(configuration().DATABASE_URL), AccountsModule, AuthModule, FxRatesModule,
+    MongooseModule.forRoot(configuration().DATABASE_URL), 
+    AccountsModule, 
+    AuthModule, 
+    FxRatesModule,
     CacheModule.register(),
-    FxConversionModule
+    FxConversionModule,
+    UsersModule
 ],
   controllers: [AppController],
   providers: [AppService],

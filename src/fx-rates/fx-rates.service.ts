@@ -19,7 +19,7 @@ export class FxRatesService {
         
         if (await this.isCached(from_curr, to_curr)) {
             const cachedData=await this.getCachedData(from_curr, to_curr);
-            // console.log("cache",cachedData)
+            console.log("cache",cachedData)
             return {
                 quoteId: cachedData.quoteId,
                 expiry: cachedData.expiry,
@@ -48,7 +48,7 @@ export class FxRatesService {
         console.log(data);
         if (data && data['Realtime Currency Exchange Rate']) {
             const quoteId = uuidv4();
-            await this.cacheService.set(`${from_curr}-${to_curr}`, { quoteId, data: data, expiry: Date.now() + 300000 }, 300000)
+            await this.cacheService.set(`${from_curr}-${to_curr}`, { quoteId, data: data, expiry: Date.now() + 3000000 }, 3000000)
             const cachedData = await this.getCachedData(from_curr, to_curr);
             console.log("gefafas",cachedData)
             return {

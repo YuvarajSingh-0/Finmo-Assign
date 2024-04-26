@@ -1,5 +1,7 @@
-import { Controller, Get, Query, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { FxRatesService } from './fx-rates.service';
+import { ApiBadRequestResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
+import { GetFxRatesDto } from './get-fx-rates.dto';
 
 
 @Controller('fx-rates')
@@ -8,7 +10,12 @@ export class FxRatesController {
     constructor(private readonly fxRatesService: FxRatesService) { }
 
     @Get()
-    getFxRates(@Query('from_curr') from_curr: string, @Query('to_curr') to_curr: string){
-        return this.fxRatesService.getFxRates(from_curr, to_curr);
+    @ApiQuery({ name: 'from_curr', required: true, type: String, description: 'Currency to convert from' })
+    @ApiQuery({ name: 'to_curr', required: true, type: String, description: 'Currency to convert to' })
+    @ApiOkResponse({ description: 'Returns the quoteId and Expiry time(in milliseconds)' })
+    @ApiBadRequestResponse({ description: 'Invalid currency code' })
+    @UsePipes(new ValidationPipe())
+    getFxRates(@Query() getFxRatesDto: GetFxRatesDto) {
+        return this.fxRatesService.getFxRates(getFxRatesDto.from_curr, getFxRatesDto.to_curr);
     }
 }

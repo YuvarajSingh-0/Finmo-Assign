@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
 import { FxRatesService } from './fx-rates.service';
 import { FxRatesController } from './fx-rates.controller';
-import { HttpModule, HttpService } from '@nestjs/axios';
-import { ScheduleModule } from '@nestjs/schedule';
+import { HttpModule } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 
