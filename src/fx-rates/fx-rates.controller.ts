@@ -2,6 +2,7 @@ import { Controller, Get, Query, UsePipes, ValidationPipe } from '@nestjs/common
 import { FxRatesService } from './fx-rates.service';
 import { ApiBadRequestResponse, ApiOkResponse, ApiQuery } from '@nestjs/swagger';
 import { GetFxRatesDto } from './get-fx-rates.dto';
+import { ToUpperCasePipe } from 'src/pipes/to-uppercase-pipe';
 
 
 @Controller('fx-rates')
@@ -14,8 +15,8 @@ export class FxRatesController {
     @ApiQuery({ name: 'to_curr', required: true, type: String, description: 'Currency to convert to' })
     @ApiOkResponse({ description: 'Returns the quoteId and Expiry time(in milliseconds)' })
     @ApiBadRequestResponse({ description: 'Invalid currency code' })
-    @UsePipes(new ValidationPipe())
-    getFxRates(@Query() getFxRatesDto: GetFxRatesDto) {
+    @UsePipes(new ToUpperCasePipe(),new ValidationPipe())
+    getFxRates(@Query(ToUpperCasePipe) getFxRatesDto: GetFxRatesDto) {
         return this.fxRatesService.getFxRates(getFxRatesDto.from_curr, getFxRatesDto.to_curr);
     }
 }

@@ -62,6 +62,7 @@ export class FxRatesService {
         const cachedData = await this.cacheService.get(`${from_curr}-${to_curr}`);
         if (cachedData) {
             if (Date.now() < cachedData['expiry']) {
+                console.log(Date.now(), cachedData['expiry'])
                 return true;
             }
         }
