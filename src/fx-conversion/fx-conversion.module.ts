@@ -7,10 +7,11 @@ import { HttpModule } from '@nestjs/axios';
 import { AccountsService } from 'src/accounts/accounts.service';
 import { AccountsModule } from 'src/accounts/accounts.module';
 import { UserSchema } from 'src/schemas/users.schema';
+import { AccountSchema } from 'src/schemas/accounts.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [HttpModule, AccountsModule, MongooseModule.forFeature([{ name: 'Users', schema: UserSchema },{ name: 'Accounts', schema: UserSchema }])],
+  imports: [HttpModule, AccountsModule],
   controllers: [FxConversionController],
   providers: [FxConversionService, FxRatesService, AccountsService]
 })
