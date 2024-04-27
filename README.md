@@ -6,10 +6,15 @@
   `JWT_SECRET`                 : value can be anything you wish
   `DATABASE_URL`              : Create a database and pass the database url here
   `ALPHAVANTAGE_API_KEY` : Get the API key from alphavantage website and place it here. Details of free and premium keys are mentioned [here](#alphavantage-api-keys-details)
-- Installing Dependencies
 
+- Installing Dependencies
 ```bash
 npm install
+```
+- Starting Redis
+Easiest way to run redis is via docker. Install Docker Desktop through this [link](https://www.docker.com/products/docker-desktop/). The docker installation process takes care of adding the bin folder to path, but if not add the bin folder to path. Bin folder is located in `C:\Program Files\Docker\Docker\resources\bin` and then run the below command in the command prompt.
+```bash
+docker compose up
 ```
 
 ## Running the app
