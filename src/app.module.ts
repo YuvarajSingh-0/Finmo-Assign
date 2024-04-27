@@ -11,19 +11,30 @@ import configuration from './config/configuration';
 import { CacheModule } from '@nestjs/cache-manager';
 import { FxConversionModule } from './fx-conversion/fx-conversion.module';
 import { UsersModule } from './users/users.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true, load: [configuration]}),
-    MongooseModule.forRoot(configuration().DATABASE_URL), 
-    AccountsModule, 
-    AuthModule, 
+  imports: [ConfigModule.forRoot({ isGlobal: true, load: [configuration] }),
+  MongooseModule.forRoot(configuration().DATABASE_URL),
+  ThrottlerModule.forRoot([{
+    ttl: 30000,
+    limit: 6,
+  }]),
+    AccountsModule,
+    AuthModule,
     FxRatesModule,
-    CacheModule.register(),
+  CacheModule.register(),
     FxConversionModule,
     UsersModule
-],
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
+    }
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
